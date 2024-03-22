@@ -57,4 +57,22 @@ public class ApiBoardDTO {
             }
         }
     }
+
+    public void setHit(int height, int width){
+        cellStates[height][width] = "hit";
+    }
+
+    public void setMiss(int height, int width){
+        cellStates[height][width] = "miss";
+    }
+
+    public void setField(int height, int width){
+        cellStates[height][width] = "field";
+    }
+
+    public void setFort(int height, int width){
+        cellStates[height][width] = "fort";
+    }
+
+    public String getCellState(int height, int width){return cellStates[height][width];}
 }

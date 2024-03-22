@@ -67,4 +67,15 @@ public class Game {
                 .mapToInt(Integer::intValue)
                 .toArray();
     }
+
+    public int getEnemiesLeft(){
+        int numEnemies = 5;
+        for(Enemy enemy : enemies){
+            if(enemy.isFortDestroyed()){
+                numEnemies--;
+            }
+        }
+        return numEnemies;
+    }
+
 }
