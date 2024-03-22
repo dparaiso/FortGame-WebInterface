@@ -49,7 +49,9 @@ public class GameController {
 
     @GetMapping("/api/games/{id}/board")
     public ApiBoardDTO getBoardState(@PathVariable("id") long gameId){
-
+        if(gameId-1 > boards.size()){
+            throw new IllegalArgumentException();
+        }
         return boards.get((int)gameId-1);
     }
 
@@ -59,12 +61,10 @@ public class GameController {
             @PathVariable("id") long gameId,
             @RequestBody ApiLocationDTO location) throws IllegalAccessException {
         if(gameId-1 > boards.size()){
-            System.out.println("arg exception");
             throw new IllegalArgumentException();
         }
-         if(location.col > 10 || location.col < 0 ||
-                location.row > 10 || location.col < 0){
-             System.out.println("access exception");
+         if(location.col > 9 || location.col < 0 ||
+            location.row > 9 || location.row < 0){
              throw new IllegalAccessException();
         }
 
@@ -105,8 +105,13 @@ public class GameController {
     @PostMapping("/api/games/{id}/cheatstate")
     public void cheatMode(
             @PathVariable("id") long gameId,
-            @RequestBody String showAll){
-        ApiGameDTO currentGame = getOneGame(gameId);
+            @RequestBody String showAll) throws IllegalAccessException {
+        if(gameId - 1 > games.size()){
+            throw new IllegalArgumentException();
+        }
+        if(!showAll.equals("SHOW_ALL")){
+            throw new IllegalAccessException();
+        }
         int gameID = (int)gameId - 1;
         ApiBoardDTO currentBoard = boards.get(gameID);
         Game currentGameBg = gamesBackground.get(gameID);
@@ -118,9 +123,7 @@ public class GameController {
                     }else{
                         currentBoard.setField(i, j);
                     }
-
                 }
-
             }
         }
 
